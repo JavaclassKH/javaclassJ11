@@ -20,14 +20,22 @@ public class MemberJoinOkCommand implements MemberInterface {
 		String contact = request.getParameter("contact") == null ? "" : request.getParameter("contact");
 		String email = request.getParameter("email") == null ? "" : request.getParameter("email");
 		
+		System.out.println(mid);
+		System.out.println(pwd);
+		System.out.println(name);
+		System.out.println(nickName);
+		System.out.println(contact);
+		System.out.println(email);
+		
 		MemberDAO dao = new MemberDAO();
 		MemberVO vo = new MemberVO();
 		
 		// 비밀번호 암호화
-		SecurityUtil su = new SecurityUtil();
-		String uid = UUID.randomUUID().toString().substring(0, 8);
-		pwd = su.encryptSHA256(uid + pwd);
-		pwd = uid + pwd;
+		/* 프로젝트 진행으로 인해 임시적으로 암호화 진행 중지 */
+//		SecurityUtil su = new SecurityUtil();
+//		String uid = UUID.randomUUID().toString().substring(0, 8);
+//		pwd = su.encryptSHA256(uid + pwd);
+//		pwd = uid + pwd;
 
 		vo.setMid(mid);
 		vo.setPwd(pwd);
@@ -37,7 +45,6 @@ public class MemberJoinOkCommand implements MemberInterface {
 		vo.setEmail(email);
 		
 		int res = dao.setMemberJoinOk(vo);
-		System.out.println("res : " + res);
 		
 		if(res != 0) {
 			request.setAttribute("message", "회원이 되신 것을 환영합니다!\\n로그인 후 이용해주세요!");

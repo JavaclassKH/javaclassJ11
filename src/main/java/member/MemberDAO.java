@@ -100,7 +100,7 @@ public class MemberDAO {
 	MemberVO vo = null;
 		
 		try {
-			sql = "select * from member where mid=?";
+			sql = "select * from member where mid = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mid);
 			rs = pstmt.executeQuery();
@@ -159,7 +159,7 @@ public class MemberDAO {
 		int res = 0;
 		
 		try {
-			sql = "insert into visitCheck values (default,?,?,?,default,default)";
+			sql = "insert into visitCheck values (default,?,?,?,default)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mid);
 			pstmt.setString(2, nickName);

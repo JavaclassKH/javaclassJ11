@@ -4,24 +4,50 @@
 <html lang="en">
     <head>
        <title>Time to DIVE into IVE</title>
+       <style>
+       	header {
+       		background-image: linear-gradient(to bottom, purple, black);
+       	}
+       	
+       	.forVid {
+       		border-radius: 10px;
+       		width: 620px;
+       		height: 290px;
+       	}
+       	
+       	video {
+       		width: 100%;
+       		height: 100%;
+       	}
+       	
+       </style>
     </head>
     <body class="d-flex flex-column h-100">
         <main class="flex-shrink-0">
             <!-- Header-->
             <%@ include file = "/include/Navbar.jsp"%> 
-            <header class="bg-dark py-5">
+            <header class="py-5">
                 <div class="container px-5">
                     <div class="row gx-5 align-items-center justify-content-center">
-                        <div class="col-lg-8 col-xl-7 col-xxl-6">
+                        <div class="col-lg-8 col-xl-7 col-xxl-6 mr-6">
                             <div class="my-5 text-xl-start">
                                 <h1 class="display-5 fw-bolder text-white text-center  mb-2">비공식 아이브 팬사이트에 오신 여러분 환영합니다!</h1>
                                 <p class="lead fw-normal text-white-50 text-center mb-4">아이브에 입덕할 준비가 되셨나요? 이 곳에서 여러분이 아이브<br/>입덕계기를 꼭 찾으시길 바라겠습니다~~~♥♥♥♥</p>
-                                <div>
-                                  <a class="btn btn-outline-success btn-lg px-4 me-3" href="https://www.melon.com/artist/song.htm?artistId=3055146" target="_blank"><font color="red"><b>아이브 노래 듣기</b></font></a>
+                                <div class="text-center">
+                                  <a class="btn btn-info btn-lg px-4 me-3" href="https://www.melon.com/artist/song.htm?artistId=3055146" target="_blank"><font color="mediumpurple"><b>아이브 노래 듣기</b></font></a>
+                                  <a class="btn btn-info btn-lg px-4 me-3" href="http://www.starship-ent.com/bbs/board.php?bo_table=ivesch" target="_blank"><font color="mediumpurple"><b>아이브 스케줄 보기</b></font></a>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5" src="" alt="..." /></div>
+                        <div class="forVid col-xl-5 col-xxl-6 d-none d-xl-block text-center">
+                        <c:set var="i" value="${random}" />
+                      	  <c:if test="${i != 1 && i != 2 && i != 3}">
+          									<video src="${ctp}/images/3.mp4" autoplay muted controls></video>
+                        	</c:if>
+                      	  <c:if test="${i == 1 || i == 2 || i == 3}">
+          									<video src="${ctp}/images/${i}.mp4" autoplay muted controls></video>
+                        	</c:if>
+                        </div>
                     </div>
                 </div>
             </header>

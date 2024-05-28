@@ -19,28 +19,31 @@ public class MemberLoginOkCommand implements MemberInterface {
 		String pwd = request.getParameter("pwd") == null ? "" : request.getParameter("pwd");
 		
 		MemberDAO dao = new MemberDAO();
-		MemberVO vo = new MemberVO();
 
-		vo = dao.getMemberLoginOk(mid);
-		System.out.println("vo : " + vo);
+		MemberVO vo = dao.getMemberLoginOk(mid);
+		if(vo == null) {
+			request.setAttribute("message", "해당 아이디로 가입된 회원정보가 없습니다");
+			request.setAttribute("url", "MemberLogin.mem");
+			return;
+		}
 		
 		// 로그인 실패 [탈퇴한 회원도 로그인이 되지 않게 해야 함]
-		if(vo.getPwd() == null) {
-			request.setAttribute("message", "해당 아이디로 가입된 회원정보가 없습니다");
-			request.setAttribute("url", request.getContextPath()+"/MemberLogin.mem");
+		/* 프로젝트 진행으로 인해 임시적으로 암호화 진행 중지 */
+		if(!vo.getPwd().equals(pwd)) {
+			request.setAttribute("message", "비밀번호를 다시 한번 확인해주세요");
+			request.setAttribute("url", "MemberLogin.mem");
 			return;
 		}		
 
 		// 저장된 비밀번호에서 saltkey를 분리시켜서 다시 암호화 한 비밀번호와 맞는지 확인한다
-		String salt = vo.getPwd().substring(0,8);
-		SecurityUtil security = new SecurityUtil();
-		pwd = security.encryptSHA256(salt + pwd);
-		System.out.println("pwd : " + pwd);
-		
-		if(!vo.getPwd().substring(8).equals(pwd)) {
-			request.setAttribute("message", "해당 아이디로 가입된 회원정보가 없습니다");
-			request.setAttribute("url", request.getContextPath()+"/MemberLogin.mem");						
-		}
+		/* 프로젝트 진행으로 인해 임시적으로 암호화 진행 중지 */
+//		String salt = vo.getPwd().substring(0,8);
+//		SecurityUtil security = new SecurityUtil();
+//		pwd = security.encryptSHA256(salt + pwd);
+//		if(!vo.getPwd().substring(8).equals(pwd)) {
+//			request.setAttribute("message", "해당 아이디로 가입된 회원정보가 없습니다");
+//			request.setAttribute("url", request.getContextPath()+"/MemberLogin.mem");						
+//		}
 		
 		// 회원인증처리
 		if(vo.getMid() != null) {			

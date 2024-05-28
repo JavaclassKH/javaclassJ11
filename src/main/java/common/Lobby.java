@@ -16,9 +16,11 @@ public class Lobby extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String viewPage = "/WEB-INF/lobby/lobby.jsp";
+		int random = (int)(Math.random() * 3) + 1; 
+		request.setAttribute("random", random);
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
-		
 		
 	}
 }

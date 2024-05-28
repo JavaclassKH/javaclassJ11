@@ -9,7 +9,7 @@
 <%@ include file="/include/Navbar.jsp" %>
 <p><br/></p>
 <div class="container">
-	
+
 </div>
 <p><br/></p>
 <%@ include file="/include/footer.jsp"%>

@@ -5,17 +5,19 @@ import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import member.MemberInterface;
 import member.MemberJoinOkCommand;
 import member.MemberMidNickNameCheckCommand;
+@SuppressWarnings("serial")
 @WebServlet("*.inf")
-public class InfosController implements InfosInterface {
+public class InfosController extends HttpServlet {
 	
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		InfosInterface command = null;
 	
 		String uri = request.getRequestURI();

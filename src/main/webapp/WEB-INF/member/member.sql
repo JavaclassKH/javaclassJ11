@@ -1,6 +1,13 @@
 
 
 -- 회원가입(member) 테이블 설계
+/*  
+		회원레벨별 사용가능 기능 
+		준회원(1) : 출석체크,소개,응원법
+		정회원(2) : 준회원기능+ 게시판,자료실
+		관리자(0) : 전부 + 관리자메뉴
+
+*/
 create table member (
 idx int not null auto_increment,        /* 회원 고유번호(PK) */
 name varchar(30) not null,              /* 회원 이름 */
@@ -39,19 +46,20 @@ mid varchar(30) not null,                          /* 출석체크 글 작성자
 nickName varchar(60) not null,                     /* 출석체크 글 작성자 닉네임 */
 content varchar(80) not null,												 /* 출석체크 글 내용 */
 checkDate datetime default now(),                  /* 출석체크 글 작성 날짜 */
-did char(2) default 'X',                           /* 출석체크 여부 확인('O'는 출석함, 'X'는 출석 안함) */
 primary key(idx),
 foreign key(mid) references member(mid)
 );
 
-desc visitCheck;
+insert into visitCheck values (default,'sona123','운영자','출석체크 테스트(더미1)',default);
+insert into visitCheck values (default,'admin','관리자','출석체크 테스트(더미2)',default);
+insert into visitCheck values (default,'sona123','운영자','출석체크 테스트2(더미3)',default);
+insert into visitCheck values (default,'admin','관리자','출석체크 테스트2(더미4)',default);
+insert into visitCheck values (default,'sona123','운영자','실제 출석체크 테스트 1',default);
+
+
+
 select * from visitCheck;
 drop table visitCheck;
-
-insert into visitCheck values (default,'sona123','운영자','출석체크 테스트(더미1)',default,default);
-insert into visitCheck values (default,'admin','관리자','출석체크 테스트(더미2)',default,default);
-insert into visitCheck values (default,'sona123','운영자','출석체크 테스트2(더미3)',default,default);
-insert into visitCheck values (default,'admin','관리자','출석체크 테스트2(더미4)',default,default);
 
 
 

@@ -8,9 +8,10 @@
 	<script>
 		'use strict';		
 		
-		if("${message}" != "NO") alert("${message}");
-		location.href = "${url}";
-	
+		if("${message}" != "NO")	alert("${message}");
+			
+		location.href = "${url}";		
+		
 	</script>
 </head>
 <body>
