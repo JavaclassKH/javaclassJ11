@@ -6,13 +6,9 @@
 				class="row align-items-center justify-content-between flex-column flex-sm-row">
 				<div class="col-auto">
 					<div class="small m-0 text-white">
-					Unofficial IVE Fansite  //  Copyright 2014. (Lee Gyu Hyuck) all rights reserved
+					Just for admin / 관리자 전용 페이지입니다. <br/>
+					관리자 전용 페이지 무단 이용 시 1억원 이상의 벌금과 3년 이상 5년 이하의 징역형을 받을 수도 있습니다. 
 					</div>				
-				</div>
-				<div class="col-auto">
-					<a class="link-light small" href="#Top">To Top</a> 
-					<span class="text-white mx-1">&middot;</span> 
-					<a class="link-light small" href="SMI.mem">Simply Maker Introduce</a>
 				</div>
 			</div>
 		</div>

@@ -2,6 +2,7 @@
 <%@ include file = "/include/basicInHead.jsp"%> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<% pageContext.setAttribute("et", "\n"); %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>	
@@ -48,13 +49,33 @@
 		});
 	}
 	
+	function boardReply(idx) {
+		let content = boardReplyForm.content.value;
+		
+		$.ajax({
+			url : "BoardReplyInputOk.bo",
+			type : "post",
+			data : {
+				idx : idx,
+				content : content
+			},
+			success : function(res) {
+				if(res != "0") location.reload();
+				else alert("댓글 등록에 오류가 발생했습니다");
+			}
+		});
+	}
+	
+	
 </script>
 <style>
 	th {
 		font-size: 1.4em;
 	}
-	.contentBox {
-		height: 400px;
+	
+	.textBox {
+		height: 300px;
+		overflow: scroll;
 	}
 	
 	.contentShow {
@@ -67,6 +88,14 @@
 	
 	.text-left {
 		height: 350px;
+	}
+	
+	#thl {
+		width: 30%;
+	}
+	
+	#tdl {
+		width: 70%;
 	}
 	
 </style>
@@ -93,21 +122,56 @@
 			</th>
 		</tr>
 		<tr>
-			<td colspan="3" class="text-left">
-				${vo.content} 
+			<td colspan="3" class="textBox">
+				${fn:replace(vo.content,et,"<br/>")} 
 			</td>
 		</tr>
 		<tr>
 			<td colspan="3" style="text-align:right">
-					<a href="javascript:goodPlus('${vo.idx}')" class="btn btn-light">😄 ${vo.good}</a>
-					&nbsp;&nbsp;
-					<a href="javascript:badPlus('${vo.idx}')" class="btn btn-light">😣 ${vo.bad}</a>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<input type="button" value="신고하기" class="btn btn-danger"/>
-					<input type="button" value="목록" onclick="location.href='BoardList.bo';" class="btn btn-warning"/>
-					<input type="button" value="답글달기" onclick="boardReply('${vo.idx}')" class="btn btn-info"/>
+			<c:if test="${vo.mid == sMid}">
+				<input type="button" value="수정하기" onclick="location.href='BoardUpdate.bo?idx=${vo.idx}';" class="btn btn-warning"/>
+			</c:if>
+			<c:if test="${vo.mid == sMid || memLevel == 0}">
+				<input type="button" value="삭제하기" onclick="location.href='BoardContentDelete.bo?idx=${vo.idx}';" class="btn btn-warning"/>
+			</c:if>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="javascript:goodPlus('${vo.idx}')" class="btn btn-light">😄 ${vo.good}</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="javascript:badPlus('${vo.idx}')" class="btn btn-light">😣 ${vo.bad}</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="button" value="신고하기" class="btn btn-danger"/>
+				<input type="button" value="목록" onclick="location.href='BoardList.bo';" class="btn btn-warning"/>
 			</td>
 		</tr>
+	</table><br/>
+		<form name="boardReplyForm">
+		<table class="table table-borderless">
+			<tr>
+				<td>
+					<c:set var="ph" value="※ 불쾌감과 혐오감을 조성하는 댓글 작성은 자제해주세요.&#13;&#10;※ 상대방에 대한 매너는 꼭 지켜주세요. 욕설과 비방을 지양해주세요.&#13;&#10;※ 아름다운 댓글 문화가 더욱 행복한 팬 활동을 할 수 있도록 이끌어갑니다.	" />
+					<textarea rows="4" name="content" class="form-control" placeholder="${ph}" style="resize: none;"></textarea>
+					<br/>
+				</td>
+			</tr>
+			<tr style="text-align: right">
+				<td>
+					<input type="button" value="답글달기" onclick="boardReply('${vo.idx}')" class="btn btn-info"/>
+				</td>
+			</tr>
+		</table>
+	</form>
+	<br/>
+	<table class="table table-borderless">
+		<c:forEach var="vo" items="${vos}" varStatus="st">
+			<tr>
+				<th id="thl">작성자 : ${vo.nickName}</th>
+			</tr>
+		</c:forEach>
 	</table>
 </div>
 <p><br/></p>

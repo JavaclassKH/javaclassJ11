@@ -52,6 +52,26 @@ public class BoardController extends HttpServlet {
 			command.execute(request, response);
 			viewPage = "/include/message.jsp";
 		}
+		else if(com.equals("/BoardUpdate")) {
+			command = new BoardUpdatecommand();
+			command.execute(request, response);
+			viewPage += "/boardUpdate.jsp";
+		}
+		else if(com.equals("/BoardUpdateOk")) {
+			command = new BoardUpdateOkcommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
+		else if(com.equals("/BoardReplyInputOk")) {
+			command = new BoardReplyInputOkcommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/BoardContentDelete")) {
+			command = new BoardContentDeletecommand();
+			command.execute(request, response);
+			viewPage = "/include/message.jsp";
+		}
 	
 	
 		

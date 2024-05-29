@@ -30,3 +30,56 @@ insert into board values (default,'test1','test1','게시판 테스트3(더미)'
 
 
 insert into board values (default,?,?,?,?,default,?,default,default,default,default);
+
+
+-- 게시글 답글 테이블 설계 
+create table boardReply (
+	idx int not null auto_increment,        /* 게시글의 댓글 고유번호 */
+  boardIdx int not null,                  /* 원본 게시글의 고유번호 */
+  mid varchar(30) not null,               /* 댓글 작성자 아이디 */
+  nickName varchar(50) not null,          /* 댓글 작성자 닉네임 */
+  content text not null,                  /* 댓글 내용 */
+  primary key(idx),                       /* 기본 키 : 고유번호 */
+	foreign key(mid) references member(mid)  
+);
+
+desc boardReply;
+select * from boardReply;
+drop table boardReply;
+
+insert into boardReply values (default,'1','sona123','운영자','댓글 테스트1(더미)');
+insert into boardReply values (default,'1','admin','관리자','댓글 테스트2(더미)');
+insert into boardReply values (default,'2','sona123','운영자','댓글 테스트3(더미)');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

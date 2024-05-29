@@ -175,8 +175,42 @@ public class MemberDAO {
 		return res;
 	}
 
+	// 로그인 시 방문횟수 증가
+	public void setVisitCntPlus(String mid) {
+		try {
+			sql = "update member set visitCnt = visitCnt + 1 where mid = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류(로그인 시 방문횟수 증가[MemberDAO]) : " + e.getMessage());
+		} finally {
+			pstmtClose();
+		}			
+	}
+
+
+
 
 	
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

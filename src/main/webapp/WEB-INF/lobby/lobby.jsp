@@ -1,9 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file = "/include/basicInHead.jsp"%> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="ctp" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html lang="en">
     <head>
        <title>Time to DIVE into IVE</title>
+       <script>
+       	'use strict';
+       	 
+       	function suggestionsInput() {
+					let suggestions = document.getElementById("suggestions").value;
+					if(suggestions.trim() = "") alert("건의사항을 작성해주세요");
+					else {
+						$.ajax({
+							url : "suggestionsInput.ad",
+							type : "post",
+							data : {suggestions : suggestions},
+							success : function(res) {
+								if(res != "0") {
+									alert("건의사항 전송이 완료되었습니다.\n건의해주셔서 정말 감사합니다.");
+									location.reload();
+								}
+								else {
+									alert("건의사항 전송에 실패했습니다. 다시 시도해주세요");
+								}
+							},
+							error : function() {
+								alert("건의사항 전송 중 오류가 발생했습니다");
+							}
+						});						
+					}
+				}
+       	 
+       	 
+       	 
+       </script>
        <style>
        	header {
        		background-image: linear-gradient(to bottom, purple, black);
@@ -51,76 +83,28 @@
                     </div>
                 </div>
             </header>
-            <!-- Features section-->
-            <section class="py-5" id="features">
-                <div class="container px-5 my-5">
-                    <div class="row gx-5">
-                        <div class="col-lg-4 mb-5 mb-lg-0"><h1 class="fw-bolder mb-0"><font color="purple">A better way to be a fan of IVE</font></h1></div>
-                        <div class="col-lg-8">
-                            <div class="row gx-5 row-cols-1 row-cols-md-2">
-                                <div class="col mb-5 h-100">
-                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-collection"></i></div>
-                                    <h2 class="h5">Featured title</h2>
-                                    <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
-                                </div>
-                                <div class="col mb-5 h-100">
-                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-building"></i></div>
-                                    <h2 class="h5">Featured title</h2>
-                                    <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
-                                </div>
-                                <div class="col mb-5 mb-md-0 h-100">
-                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-toggles2"></i></div>
-                                    <h2 class="h5">Featured title</h2>
-                                    <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
-                                </div>
-                                <div class="col h-100">
-                                    <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-toggles2"></i></div>
-                                    <h2 class="h5">Featured title</h2>
-                                    <p class="mb-0">Paragraph of text beneath the heading to explain the heading. Here is just a bit more text.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!-- Testimonial section-->
-            <div class="py-5 bg-light">
-                <div class="container px-5 my-5">
-                    <div class="row gx-5 justify-content-center">
-                        <div class="col-lg-10 col-xl-7">
-                            <div class="text-center">
-                                <div class="fs-4 mb-4 fst-italic">"Working with Start Bootstrap templates has saved me tons of development time when building new projects! Starting with a Bootstrap template just makes things easier!"</div>
-                                <div class="d-flex align-items-center justify-content-center">
-                                    <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
-                                    <div class="fw-bold">
-                                        Tom Ato
-                                        <span class="fw-bold text-primary mx-1">/</span>
-                                        CEO, Pomodoro
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <!-- Blog preview section-->
             <section class="py-5">
                 <div class="container px-5 my-5">
                     <div class="row gx-5 justify-content-center">
                         <div class="col-lg-8 col-xl-6">
                             <div class="text-center">
-                                <h2 class="fw-bolder">From our blog</h2>
-                                <p class="lead fw-normal text-muted mb-5">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque fugit ratione dicta mollitia. Officiis ad.</p>
+                                <h2 class="fw-bolder"><b>Second DIVE를 소개합니다!</b></h2>
+                                <p class="lead fw-normal text-muted mb-5">
+                                	아이브를 사랑하는 팬들이 모여 함께 팬 활동을 이어갈 수 있고,<br/>
+                                	아이브를 모르는 분들이 다이브로 변하도록 만들 수 있으며, <br/>
+                                	전 세계에 아이브가 알려지도록 만들고 싶은<br/>
+                                	<b>이곳은 Second DIVE 입니다~</b>
+                                </p>
                             </div>
                         </div>
                     </div>
                     <div class="row gx-5">
                         <div class="col-lg-4 mb-5">
                             <div class="card h-100 shadow border-0">
-                                <img class="card-img-top" src="https://dummyimage.com/600x350/ced4da/6c757d" alt="..." />
+                                <img class="card-img-top" src="https://dummyimage.com/600x350/adb5bd/495057" alt="..." />
                                 <div class="card-body p-4">
-                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">News</div>
-                                    <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">Blog post title</h5></a>
+                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">News</div>                                  
                                     <p class="card-text mb-0">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                 </div>
                                 <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
@@ -141,7 +125,6 @@
                                 <img class="card-img-top" src="https://dummyimage.com/600x350/adb5bd/495057" alt="..." />
                                 <div class="card-body p-4">
                                     <div class="badge bg-primary bg-gradient rounded-pill mb-2">Media</div>
-                                    <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">Another blog post title</h5></a>
                                     <p class="card-text mb-0">This text is a bit longer to illustrate the adaptive height of each card. Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                 </div>
                                 <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
@@ -162,7 +145,6 @@
                                 <img class="card-img-top" src="https://dummyimage.com/600x350/6c757d/343a40" alt="..." />
                                 <div class="card-body p-4">
                                     <div class="badge bg-primary bg-gradient rounded-pill mb-2">News</div>
-                                    <a class="text-decoration-none link-dark stretched-link" href="#!"><h5 class="card-title mb-3">The last blog post title is a little bit longer than the others</h5></a>
                                     <p class="card-text mb-0">Some more quick example text to build on the card title and make up the bulk of the card's content.</p>
                                 </div>
                                 <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
@@ -183,15 +165,22 @@
                     <aside class="bg-primary bg-gradient rounded-3 p-4 p-sm-5 mt-5">
                         <div class="d-flex align-items-center justify-content-between flex-column flex-xl-row text-center text-xl-start">
                             <div class="mb-4 mb-xl-0">
-                                <div class="fs-3 fw-bold text-white">New products, delivered to you.</div>
-                                <div class="text-white-50">Sign up for our newsletter for the latest updates.</div>
+                                <div class="fs-3 fw-bold text-white">
+                                <font size="6em">
+                                	처음 만들어 본 웹 페이지이기에<br/>
+                                	부족한 점이 많습니다.
+                                </font>
+                                </div>
+                                <div class="text-white-50">우측 폼에 건의사항을 남겨주세요</div>
                             </div>
                             <div class="ms-xl-4">
                                 <div class="input-group mb-2">
-                                    <input class="form-control" type="text" placeholder="Email address..." aria-label="Email address..." aria-describedby="button-newsletter" />
-                                    <button class="btn btn-outline-light" id="button-newsletter" type="button">Sign up</button>
+                               	 <form name="sgForm">
+                                    <textarea rows="3" style="width:550px; height: 300px; resize: none;" class="form-control"></textarea>
+                                    <button class="btn btn-outline-light form-control mt-3" id="suggestions" onclick="suggestionsInput()" type="button" >제출하기</button>
+                                	</form>
                                 </div>
-                                <div class="small text-white-50">We care about privacy, and will never share your data.</div>
+                                <div class="small text-white-50">여러분의 건의사항을 통해 더욱 발전하겠습니다!!</div>
                             </div>
                         </div>
                     </aside>

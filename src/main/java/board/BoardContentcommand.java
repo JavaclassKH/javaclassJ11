@@ -29,7 +29,14 @@ public class BoardContentcommand implements BoardInterface {
 		}
 		session.setAttribute("sContentIdx", ContentReadNum);
 		
-		System.out.println("vo : " + vo);
 		request.setAttribute("vo", vo);
+		
+		BoardReplyDAO rDao = new BoardReplyDAO();
+		ArrayList<BoardReplyVO> vos = rDao.getBoardReplyList(idx);
+		request.setAttribute("vos", vos);
+		
+		
+		
+		
 	}
 }

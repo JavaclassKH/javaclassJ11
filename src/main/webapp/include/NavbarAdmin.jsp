@@ -13,21 +13,16 @@
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                            <li class="nav-item"><a class="nav-link" href="${ctp}/Lobby">로비</a></li>
-                            <li class="nav-item"><a class="nav-link" href="MemberVisitCheck.mem">출석체크</a></li>
-                            <li class="nav-item"><a class="nav-link" href="IntroduceIVE.inf">아이브소개</a></li>
                             <c:if test="${empty sMid}">
-	                            <li class="nav-item"><a class="nav-link" href="MemberLogin.mem">로그인</a></li>
-	                            <li class="nav-item"><a class="nav-link" href="MemberJoin.mem">회원가입</a></li>
                             </c:if>
-                            <c:if test="${!empty sMid}">
-	                            <li class="nav-item"><a class="nav-link" href="BoardList.bo">게시판</a></li>
-	                            <li class="nav-item"><a class="nav-link" href="PdsList.pds">자료공유</a></li>
-	                            <li class="nav-item"><a class="nav-link" href="MyPage.mem">마이페이지</a></li>
-	                            <li class="nav-item"><a class="nav-link" href="MemberLogout.mem">로그아웃</a></li>
+                            <c:if test="${!empty sMid}">	                          
                             </c:if>
                             <c:if test="${memLevel == 0}">
-                            	<li class="nav-item"><a class="nav-link" href="JustForAdmin.ad">관리자전용</a></li>
+                            	<li class="nav-item"><a class="nav-link" href="JustForAdmin.ad?mSw=1">회원관리</a></li>
+                            	<li class="nav-item"><a class="nav-link" href="JustForAdmin.ad?mSw=2">출석체크관리</a></li>
+                            	<li class="nav-item"><a class="nav-link" href="JustForAdmin.ad?mSw=3">게시판관리</a></li>
+                            	<li class="nav-item"><a class="nav-link" href="JustForAdmin.ad?mSw=4">자료실관리</a></li>
+                            	<li class="nav-item"><a class="nav-link" href="${ctp}/Lobby">관리자모드종료</a></li>
                             </c:if>
                             <li class="nav-item dropdown ml-3">
                                 <a class="nav-link dropdown-toggle ml-5" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">사이트맵</a>

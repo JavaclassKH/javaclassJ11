@@ -164,6 +164,41 @@ public class BoardDAO {
 		return res;
 	}
 
+	// 게시판 글 삭제
+	public int setBoardContentDelete(int idx) {
+		int res = 0;		
+		try {
+			sql = "delete from board where idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			res = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류(게시판 글 등록하기[boardDAO]) : " + e.getMessage());
+		} finally {
+			pstmtClose();
+		}		
+		return res;
+	}
+
+	// 게시글 수정하기
+	public int setBoardUpdateOk(BoardVO vo) {
+		int res = 0;		
+		try {
+			sql = "update board set title = ? , content = ? where idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getTitle());
+			pstmt.setString(1, vo.getContent());
+			pstmt.setInt(3, vo.getIdx());
+			res = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL 오류(게시글 수정하기[boardDAO]) : " + e.getMessage());
+		} finally {
+			pstmtClose();
+		}		
+		return res;
+	}
+
+
 
 
 	

@@ -1,7 +1,6 @@
 package common;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,9 +14,10 @@ public class Lobby extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String viewPage = "/WEB-INF/lobby/lobby.jsp";
 		int random = (int)(Math.random() * 3) + 1; 
 		request.setAttribute("random", random);
+		
+		String viewPage = "/WEB-INF/lobby/lobby.jsp";
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);

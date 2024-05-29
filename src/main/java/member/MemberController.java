@@ -53,6 +53,9 @@ public class MemberController extends HttpServlet {
 			command.execute(request, response);
 			viewPage += "/memberLoginForm.jsp";
 		}
+		else if(com.equals("/SMI")) {
+			viewPage += "/simplyMakerIntroduce.jsp";
+		}
 		else if(memLevel > 2) {
 			request.setAttribute("message", "로그인 후 이용해주세요");
 			request.setAttribute("url", "MemberLogin.mem");
@@ -70,6 +73,11 @@ public class MemberController extends HttpServlet {
 			command = new MemberVisitCheckOkCommand();
 			command.execute(request, response);
 			return;
+		}
+		else if(com.equals("/MyPage")) {
+			command = new MypageCommand();
+			command.execute(request, response);
+			viewPage += "/myPage.jsp";
 		}
 	
 		
