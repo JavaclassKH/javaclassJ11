@@ -18,10 +18,11 @@
                             <c:if test="${!empty sMid}">	                          
                             </c:if>
                             <c:if test="${memLevel == 0}">
-                            	<li class="nav-item"><a class="nav-link" href="JustForAdmin.ad?mSw=1">회원관리</a></li>
-                            	<li class="nav-item"><a class="nav-link" href="JustForAdmin.ad?mSw=2">출석체크관리</a></li>
-                            	<li class="nav-item"><a class="nav-link" href="JustForAdmin.ad?mSw=3">게시판관리</a></li>
-                            	<li class="nav-item"><a class="nav-link" href="JustForAdmin.ad?mSw=4">자료실관리</a></li>
+                            	<li class="nav-item"><a class="nav-link" href="JustForAdmin.ad">관리자로비</a></li>
+                            	<li class="nav-item"><a class="nav-link" href="AdminMemberList.ad">회원관리</a></li>
+                            	<li class="nav-item"><a class="nav-link" href="AdminVisitCheck.ad">출석체크관리</a></li>
+                            	<li class="nav-item"><a class="nav-link" href="JustForAdmin.ad">게시판관리</a></li>
+                            	<li class="nav-item"><a class="nav-link" href="JustForAdmin.ad">자료실관리</a></li>
                             	<li class="nav-item"><a class="nav-link" href="${ctp}/Lobby">관리자모드종료</a></li>
                             </c:if>
                             <li class="nav-item dropdown ml-3">

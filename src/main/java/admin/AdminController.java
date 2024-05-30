@@ -24,21 +24,29 @@ public class AdminController extends HttpServlet {
 		HttpSession session = request.getSession();
 		int memLevel = session.getAttribute("memLevel") == null ? 444 : (int)session.getAttribute("memLevel"); 
 		
+		
 		if(memLevel != 0) {
 			request.setAttribute("message", "관리자 전용 페이지입니다");
 			request.setAttribute("url", "MemberLogin.mem");
 			viewPage = "/include/message.jsp";
 		}
-		else if(com.equals("/suggestionsInput")) {
-			command = new SuggestionsInputCommand();
-			command.execute(request, response);
-			viewPage += "/suggestionsList.jsp";
-		}
 		else if(com.equals("/JustForAdmin")) {
-			command = new AdminManageMentSystemCommand();
+			viewPage += "/justForAdminLobby.jsp";
+		}
+		else if(com.equals("/AdminMemberList")) {
+			command = new AdminMemberList();
 			command.execute(request, response);
-//			viewPage += "/justForAdminLobby.jsp";
-			viewPage = "/include/message.jsp";
+			viewPage += "/adminMemberList.jsp";
+		}
+		else if(com.equals("/AdminMemberLevelChange")) {
+			command = new AdminMemberLevelChange();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/AdminVisitCheck")) {
+			command = new AdminVisitCheck();
+			command.execute(request, response);
+			return;
 		}
 		
 		

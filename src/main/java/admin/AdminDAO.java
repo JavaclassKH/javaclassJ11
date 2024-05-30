@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import common.GetConn;
 import member.MemberVO;
+import member.VisitCheckVO;
 
 public class AdminDAO {
 	private Connection conn = GetConn.getConn();
@@ -43,7 +44,7 @@ public class AdminDAO {
 		ArrayList<MemberVO> vos = new ArrayList<MemberVO>();
 		
 		try {
-			sql = "select * from visitCheck order by idx desc";
+			sql = "select * from member order by idx desc";
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			
@@ -70,6 +71,32 @@ public class AdminDAO {
 		return vos;
 	}
 	
+	// 회원 출석체크 글 전체 불러오기(관리자전용)
+	public ArrayList<VisitCheckVO> getVisitCheckList() {
+		ArrayList<VisitCheckVO> vos = new ArrayList<VisitCheckVO>();
+		
+		try {
+			sql = "select * from visitCheck order by idx desc";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				VisitCheckVO vcVo = new VisitCheckVO();
+				vcVo.setIdx(rs.getInt("idx"));
+				vcVo.setMid(rs.getString("mid"));
+				vcVo.setNickName(rs.getString("nickName"));
+				vcVo.setContent(rs.getString("content"));
+				vcVo.setCheckDate(rs.getString("checkDate"));
+				
+				vos.add(vcVo);
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL오류(출석체크 글 가져오기[memberDAO]) : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return vos;
+	}
 	
 	
 	

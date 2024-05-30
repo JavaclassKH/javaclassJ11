@@ -60,6 +60,11 @@ public class MemberLoginOkCommand implements MemberInterface {
 			session.setAttribute("memLevel", vo.getMemLevel());
 			session.setAttribute("strLevel", strLevel);
 			
+			if(strLevel.equals("관리자")) {
+				session.setAttribute("mSw", 0);
+			}
+			
+			
 			dao.setVisitCntPlus(mid);
 			
 			request.setAttribute("message",  "["+mid+"] 님 로그인 완료되었습니다");

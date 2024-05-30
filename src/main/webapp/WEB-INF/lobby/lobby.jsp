@@ -74,10 +74,10 @@
                         <div class="forVid col-xl-5 col-xxl-6 d-none d-xl-block text-center">
                         <c:set var="i" value="${random}" />
                       	  <c:if test="${i != 1 && i != 2 && i != 3}">
-          									<video src="${ctp}/images/3.mp4" autoplay muted controls></video>
+          									<video src="${ctp}/images/3.mp4" autoplay muted loop controls></video>
                         	</c:if>
                       	  <c:if test="${i == 1 || i == 2 || i == 3}">
-          									<video src="${ctp}/images/${i}.mp4" autoplay muted controls></video>
+          									<video src="${ctp}/images/${i}.mp4" autoplay muted loop controls></video>
                         	</c:if>
                         </div>
                     </div>

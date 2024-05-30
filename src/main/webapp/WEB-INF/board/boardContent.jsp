@@ -91,11 +91,14 @@
 	}
 	
 	#thl {
-		width: 30%;
+		width: 26%;
+		text-align: left;
+		padding-left: 25px;
 	}
 	
 	#tdl {
-		width: 70%;
+		width: 74%;
+		text-align: left;
 	}
 	
 </style>
@@ -166,10 +169,13 @@
 		</table>
 	</form>
 	<br/>
-	<table class="table table-borderless">
+	<table class="table table-primary text-center">
 		<c:forEach var="vo" items="${vos}" varStatus="st">
 			<tr>
-				<th id="thl">작성자 : ${vo.nickName}</th>
+				<th id="thl">
+					🆔 ${vo.nickName}
+				</th>
+				<td>${vo.content}</td>
 			</tr>
 		</c:forEach>
 	</table>

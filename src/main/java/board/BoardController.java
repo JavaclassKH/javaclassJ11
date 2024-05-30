@@ -29,6 +29,11 @@ public class BoardController extends HttpServlet {
 			request.setAttribute("url", "MemberLogin.mem");
 			viewPage = "/include/message.jsp";
 		}
+		if(memLevel > 2 || memLevel == 1) {
+			request.setAttribute("message", "정회원만 게시판 사용이 가능합니다");
+			request.setAttribute("url", "MemberLogin.mem");
+			viewPage = "/include/message.jsp";
+		}
 		else if(com.equals("/BoardList")) {
 			command = new BoardListcommand();
 			command.execute(request, response);
