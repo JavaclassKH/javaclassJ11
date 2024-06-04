@@ -17,6 +17,9 @@ public class Lobby extends HttpServlet {
 		int random = (int)(Math.random() * 3) + 1; 
 		request.setAttribute("random", random);
 		
+		int ir = (int)(Math.random() * 6) + 1; 
+		request.setAttribute("ir", ir);
+		
 		String viewPage = "/WEB-INF/lobby/lobby.jsp";
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

@@ -98,7 +98,40 @@ public class AdminDAO {
 		return vos;
 	}
 	
-	
+//회원레벨 일괄변경
+	public int setMemberLevelChange(int i, int level) {
+		int res = 0;
+		
+		try {
+			sql = "update member set memLevel = ? where idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, level);
+			pstmt.setInt(2, i);
+			res = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL오류(회원레벨 일괄변경(관리자)[memberDAO])" + e.getMessage());
+		} finally {
+			pstmtClose();
+		}
+		return res;
+	}
+
+	// 선택게시글 삭제!(관리자)
+	public int setAdminBoardListDelete(int idx) {
+		int res = 0;
+		
+		try {
+			sql = "delete from board where idx = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			res = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("SQL오류(선택게시글 삭제!(관리자)[memberDAO])" + e.getMessage());
+		} finally {
+			pstmtClose();
+		}
+		return res;
+	}
 	
 	
 	

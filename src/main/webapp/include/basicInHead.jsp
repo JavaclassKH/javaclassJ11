@@ -1,5 +1,7 @@
 	<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	<c:set var="ctp" value="${pageContext.request.contextPath}"/>
+	<c:set var="ipLobby" value="http://192.168.50.64:9090/javaclassJ11/Lobby"/>
 	<style>
 	@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
 	* {

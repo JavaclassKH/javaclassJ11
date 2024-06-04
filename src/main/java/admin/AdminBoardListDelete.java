@@ -8,12 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import member.MemberDAO;
 
-public class AdminMemberLevelChange implements AdminInterface {
+public class AdminBoardListDelete implements AdminInterface {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    int level = request.getParameter("level") == null ? 0 : Integer.parseInt(request.getParameter("level"));
-		String idxArr = request.getParameter("idxArr") == null ? "" : request.getParameter("idxArr");
+    String idxArr = request.getParameter("idxArr") == null ? "" : request.getParameter("idxArr");
     AdminDAO dao = new AdminDAO();
     int res = 0;
      
@@ -22,7 +21,7 @@ public class AdminMemberLevelChange implements AdminInterface {
     if (!idxArr.equals("")) {
       arrayIdx = idxArr.split("/");
       for (String idx : arrayIdx) {
-        res = dao.setMemberLevelChange(Integer.parseInt(idx), level);
+        res = dao.setAdminBoardListDelete(Integer.parseInt(idx));
       }
       response.getWriter().write(res + "");    	
       return;
@@ -30,5 +29,7 @@ public class AdminMemberLevelChange implements AdminInterface {
     else {
     	response.getWriter().write(res + "");    	
     }
- }
+
+	}
+
 }

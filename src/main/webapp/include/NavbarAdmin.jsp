@@ -23,7 +23,6 @@
                             	<li class="nav-item"><a class="nav-link" href="AdminMemberList.ad">회원관리</a></li>
                             	<li class="nav-item"><a class="nav-link" href="AdminVisitCheck.ad">출석체크관리</a></li>
                             	<li class="nav-item"><a class="nav-link" href="AdminBoardList.ad">게시판관리</a></li>
-                            	<li class="nav-item"><a class="nav-link" href="JustForAdmin.ad">자료실관리</a></li>
                             	<li class="nav-item"><a class="nav-link" href="http://192.168.50.64:9090/javaclassJ11/Lobby">관리자모드종료</a></li>
                             </c:if>
                             <li class="nav-item dropdown ml-3">

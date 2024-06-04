@@ -55,6 +55,11 @@ public class AdminController extends HttpServlet {
 			command.execute(request, response);
 			viewPage += "/adminBoardList.jsp";
 		}
+		else if(com.equals("/AdminBoardListDelete")) {
+			command = new AdminBoardListDelete();
+			command.execute(request, response);
+			return;
+		}
 		
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

@@ -5,6 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ include file = "/include/basicInHead.jsp"%> 
+<c:set var="ipLobby" value="http://192.168.50.64:9090/javaclassJ11/Lobby"/>
 <!DOCTYPE html>
 <html lang="ko">
 <head>	
@@ -28,75 +29,46 @@
 		
 		// 선택회원 등급변경 
     function memLevelChange() {
-    	let select = document.getElementById("levelSelect");
-    	let levelSelectText = select.options[select.selectedIndex].text;
-    	let levelSelect = select.options[select.selectedIndex].value;
-    	// let levelSelect = document.getElementById("levelSelect").value;
-    	let idxSelectArray = '';
+    	let members = document.querySelectorAll('input[name=members]:checked');
+    	let level = $("#levelSelect").val();
     	
-      for(let i=0; i<myform.idxFlag.length; i++) {
-        if(myform.idxFlag[i].checked) idxSelectArray += myform.idxFlag[i].value + "/";
-      }
-    	if(idxSelectArray == '') {
-    		alert("등급을 변경할 항목을 1개 이상 선택하세요");
-    		return false;
+    	if(members.length === 0) {
+    		alert("등급을 변경할 회원을 1명 이상 선택해주세요");
+    		location.reload();
+    		return;
     	}
     	
-      idxSelectArray = idxSelectArray.substring(0,idxSelectArray.lastIndexOf("/"));
-      let query = {
-    		  idxSelectArray : idxSelectArray,
-    		  levelSelect : levelSelect
-      }
-      
-      $.ajax({
-    	  url  : "MemberLevelSelectCheck.ad",
-    	  type : "post",
-    	  data : query,
-    	  success:function(res) {
-    		  if(res != "0") alert("선택한 항목들이 "+levelSelectText+"(으)로 변경되었습니다.");
-    		  else alert("등급변경 실패~");
-  			  location.reload();
-    	  },
-    	  error : function() {
-    		  alert("전송 실패~~");
-    	  }
+    	let idxArr = "";
+    	members.forEach(function(member) {
+    		idxArr += member.value+"/";
       });
+    	
+    	$.ajax({
+        url: "AdminMemberLevelChange.ad",
+        type: "post",
+        data: {
+           level: level,
+           idxArr : idxArr
+        },
+        success : function(res) {
+          if (res != "0") {
+            alert("등급 수정 완료!");
+            location.reload(true);
+          } 
+          else {
+            alert("등급 수정 실패");
+          }
+        },
+        error : function() {
+          alert("전송오류!");
+        }
+      });
+    	
     }
 		
 		
 		
-/* 		function memLevelChange(level) {
-			let members = document.querySelectorAll('input[name="members"]:checked');
-			let selectLevel = lcsForm.ls.value;
-			
-			for(let i=0; i<=members.length(); i++) {
-				members[i] += "/";
-			}
-			
-		  $.ajax({
-				url : "AdminMemberLevelChange.ad",
-				type : "post",
-				data : {
-					members : members,
-					level : selectLevel
-				},
-				traditional: true,
-				success:function(res) {
-					if(res != "0") {
-						alert("회원등급 변경이 완료되었습니다");
-						location.reload(true);
-					}
-					else {
-						alert("회원등급 변경에 실패했습니다");						
-					}
-				},
-				error:function() {					
-					alert("회원등급 변경 전송오류");						
-				}
-			});	 
-			
-		} */
-		
+
 		// 회원정보 모달로 보기
 		function modalOn(name, mid, nickName, contact, email) {
 			$("#memberModal #modalName").text(name);
@@ -154,12 +126,11 @@
 <p><br/></p><br/>
 	<div id="leftWindow">	
 		<br/><br/>	
-		<p><a class="btn btn-light" href="JustForAdmin.ad?">관리자로비</a></p><br/><br/>
+		<p><a class="btn btn-light" href="JustForAdmin.ad">관리자로비</a></p><br/><br/>
 		<p><a class="btn btn-light" href="AdminMemberList.ad">회원관리</a></p><br/><br/>
 		<p><a class="btn btn-light" href="AdminVisitCheck.ad">출석체크관리</a></p><br/><br/>
 		<p><a class="btn btn-light" href="AdminBoardList.ad">게시판관리</a></p><br/><br/>
-		<p><a class="btn btn-light" href="JustForAdmin.ad?mSw=4">자료실관리</a></p><br/><br/>
-		<p><a class="btn btn-light" href="${ctp}/Lobby">관리종료</a></p><br/><br/>
+		<p><a class="btn btn-light" href="${ipLobby}">관리종료</a></p><br/><br/>
 	</div>
 	<div id="rightWindow">
 		<br/>
@@ -171,11 +142,10 @@
 			</div>
 			<div id="levelSelector">
 				<select name="levelSelect" id="levelSelect">
-		      <option value="2">정회원</option>
 		      <option value="1">준회원</option>
-		      <option value="3">우수회원</option>
+		      <option value="2">정회원</option>
 			  </select>
-			  <button id="mlcb" onclick="memLevelChange()" class="badge bg-danger">등급변경</button>
+			  <input type="button" id="mlcb" value="등급변경" onclick="memLevelChange()" class="btn btn-danger btn-sm" />
 			</div>
 				<form name="myform">
 				<table class="table table-bordered table-hover">
@@ -191,10 +161,10 @@
 						<c:if test="${vo.memLevel != 0}">
 							<tr>
 								<td class="text-center" id="sels">
-		        				<c:set var="i" value="${st.index}" />
-		        				<c:if test="${vo.memLevel != 0}">
-		          				<input type="checkbox" name="members" id="members${i}" value="${vo.mid}" />
-		        				</c:if>      				
+		        			<c:set var="i" value="${st.index}" />
+			        		<c:if test="${vo.memLevel != 0}">
+			          		<input type="checkbox" name="members" id="members${i}" value="${vo.idx}" />
+			        		</c:if>      				
 								</td>
 								<td>${vo.mid}</td>
 								<td>										

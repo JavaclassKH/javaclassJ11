@@ -434,11 +434,7 @@ public class MemberDAO {
 		return vos;
 	}
 
-	// 회원레벨 일괄변경
-	public int setMemberLevelChange() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
 
 
 

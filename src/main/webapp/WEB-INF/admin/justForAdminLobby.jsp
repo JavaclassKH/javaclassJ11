@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
+<c:set var="ipLobby" value="http://192.168.50.64:9090/javaclassJ11/Lobby"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,12 +40,11 @@
 <p><br/></p><br/> 
 <div id="leftWindow">	
 	<br/><br/>	
-	<p><a class="btn btn-light" href="JustForAdmin.ad?mSw=0">관리자로비</a></p><br/><br/>
+	<p><a class="btn btn-light" href="JustForAdmin.ad">관리자로비</a></p><br/><br/>
 	<p><a class="btn btn-light" href="AdminMemberList.ad">회원관리</a></p><br/><br/>
 	<p><a class="btn btn-light" href="AdminVisitCheck.ad">출석체크관리</a></p><br/><br/>
 	<p><a class="btn btn-light" href="AdminBoardList.ad">게시판관리</a></p><br/><br/>
-	<p><a class="btn btn-light" href="JustForAdmin.ad?mSw=4">자료실관리</a></p><br/><br/>
-	<p><a class="btn btn-light" href="${ctp}/Lobby">관리종료</a></p><br/><br/>
+	<p><a class="btn btn-light" href="${ipLobby}">관리종료</a></p><br/><br/>
 </div>
 <div id="rightWindow">
 <p><br/></p>

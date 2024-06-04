@@ -1,14 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file = "/include/basicInHead.jsp"%> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<% int ir = (int)request.getAttribute("ir"); %>
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
+<c:set var="i" value="<%=ir%>" />
 <!DOCTYPE html>
 <html lang="en">
     <head>
        <title>Time to DIVE into IVE</title>
        <script>
        	'use strict';
-       	 
+       	
+       	// 건의사항 제출
        	function suggestionsInput() {
 					let suggestions = document.getElementById("suggestions").value;
 					if(suggestions.trim() = "") alert("건의사항을 작성해주세요");
@@ -37,6 +40,11 @@
        	 
        </script>
        <style>
+       	
+       	body {
+       		cursor : url('${ctp}/images/c${i}.gif') 12 11, auto;
+       	}
+       	
        	header {
        		background-image: linear-gradient(to bottom, purple, black);
        	}

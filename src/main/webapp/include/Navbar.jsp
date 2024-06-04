@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
+<c:set var="ipLobby" value="http://192.168.50.64:9090/javaclassJ11/Lobby"/>
   <!-- 최상단 네이게이션 바 -->
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
@@ -20,7 +21,7 @@
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                            <li class="nav-item"><a class="nav-link" href="http://192.168.50.64:9090/javaclassJ11/Lobby">로비</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${ipLobby}">로비</a></li>
                             <li class="nav-item"><a class="nav-link" href="MemberVisitCheck.mem">출석체크</a></li>
                             <li class="nav-item"><a class="nav-link" href="IntroduceIVE.inf">아이브소개</a></li>
                             <c:if test="${empty sMid}">
@@ -29,7 +30,6 @@
                             </c:if>
                             <c:if test="${!empty sMid}">
 	                            <li class="nav-item"><a class="nav-link" href="BoardList.bo">게시판</a></li>
-	                            <li class="nav-item"><a class="nav-link" href="PdsList.pds">자료공유</a></li>
 	                            <li class="nav-item"><a class="nav-link" href="MyPage.mem">마이페이지</a></li>
 	                            <li class="nav-item"><a class="nav-link" href="MemberLogout.mem">로그아웃</a></li>
                             </c:if>
