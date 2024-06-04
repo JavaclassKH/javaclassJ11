@@ -3,6 +3,7 @@
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
   <!-- 최상단 네이게이션 바 -->
 <style>
+	@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
 	#Navbar {
 		background-color: #9aa3e1;
 	}
@@ -21,9 +22,9 @@
                             	<li class="nav-item"><a class="nav-link" href="JustForAdmin.ad">관리자로비</a></li>
                             	<li class="nav-item"><a class="nav-link" href="AdminMemberList.ad">회원관리</a></li>
                             	<li class="nav-item"><a class="nav-link" href="AdminVisitCheck.ad">출석체크관리</a></li>
-                            	<li class="nav-item"><a class="nav-link" href="JustForAdmin.ad">게시판관리</a></li>
+                            	<li class="nav-item"><a class="nav-link" href="AdminBoardList.ad">게시판관리</a></li>
                             	<li class="nav-item"><a class="nav-link" href="JustForAdmin.ad">자료실관리</a></li>
-                            	<li class="nav-item"><a class="nav-link" href="${ctp}/Lobby">관리자모드종료</a></li>
+                            	<li class="nav-item"><a class="nav-link" href="http://192.168.50.64:9090/javaclassJ11/Lobby">관리자모드종료</a></li>
                             </c:if>
                             <li class="nav-item dropdown ml-3">
                                 <a class="nav-link dropdown-toggle ml-5" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">사이트맵</a>

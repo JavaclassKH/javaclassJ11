@@ -22,32 +22,65 @@
 			else if(x == 2) {
 			  for(let i=0; i<=${fn:length(vos)}; i++) {
 			    $("#members"+i).prop("checked",false);
-			  }								
+			  }
 			}
 		}
 		
 		// 선택회원 등급변경 
-		function memLevelChange() {
-			let members = "";
+    function memLevelChange() {
+    	let select = document.getElementById("levelSelect");
+    	let levelSelectText = select.options[select.selectedIndex].text;
+    	let levelSelect = select.options[select.selectedIndex].value;
+    	// let levelSelect = document.getElementById("levelSelect").value;
+    	let idxSelectArray = '';
+    	
+      for(let i=0; i<myform.idxFlag.length; i++) {
+        if(myform.idxFlag[i].checked) idxSelectArray += myform.idxFlag[i].value + "/";
+      }
+    	if(idxSelectArray == '') {
+    		alert("등급을 변경할 항목을 1개 이상 선택하세요");
+    		return false;
+    	}
+    	
+      idxSelectArray = idxSelectArray.substring(0,idxSelectArray.lastIndexOf("/"));
+      let query = {
+    		  idxSelectArray : idxSelectArray,
+    		  levelSelect : levelSelect
+      }
+      
+      $.ajax({
+    	  url  : "MemberLevelSelectCheck.ad",
+    	  type : "post",
+    	  data : query,
+    	  success:function(res) {
+    		  if(res != "0") alert("선택한 항목들이 "+levelSelectText+"(으)로 변경되었습니다.");
+    		  else alert("등급변경 실패~");
+  			  location.reload();
+    	  },
+    	  error : function() {
+    		  alert("전송 실패~~");
+    	  }
+      });
+    }
+		
+		
+		
+/* 		function memLevelChange(level) {
+			let members = document.querySelectorAll('input[name="members"]:checked');
+			let selectLevel = lcsForm.ls.value;
 			
-		  for(let i=0; i<membersForm.members.length; i++) {
-		    if(membersForm.members[i].checked) members += membersForm.members[i].value + "/";
-		  }
-		  if(members == "") {
-		  	alert("등급을 변경할 회원을 1명 이상 선택하세요");
-		  	return false;
-		  }
-		    	
-		  let query = {
-				members : members,
-				level : level
-		  }
-
+			for(let i=0; i<=members.length(); i++) {
+				members[i] += "/";
+			}
 			
-			$.ajax({
+		  $.ajax({
 				url : "AdminMemberLevelChange.ad",
 				type : "post",
-				data : query,
+				data : {
+					members : members,
+					level : selectLevel
+				},
+				traditional: true,
 				success:function(res) {
 					if(res != "0") {
 						alert("회원등급 변경이 완료되었습니다");
@@ -60,17 +93,9 @@
 				error:function() {					
 					alert("회원등급 변경 전송오류");						
 				}
-			});		
-		}
-		
-		/* // 회원정보 모달로 보기
-		function modalOn(name, mid, nickName, contact, email) {
-			$("#myModal4 #modalName").text('${vo.name}');
-			$("#myModal4 #modalMid").text('${vo.mid}');
-			$("#myModal4 #modalNickName").text('${vo.nickName}');
-			$("#myModal4 #modalContact").text('${vo.contact}');
-			$("#myModal4 #modalEmail").text('${vo.email}');		
-		}  */
+			});	 
+			
+		} */
 		
 		// 회원정보 모달로 보기
 		function modalOn(name, mid, nickName, contact, email) {
@@ -80,7 +105,6 @@
 			$("#memberModal #modalContact").text(contact);
 			$("#memberModal #modalEmail").text(email);		
 		} 
-		
 		
 	</script>
 	<style>  
@@ -133,7 +157,7 @@
 		<p><a class="btn btn-light" href="JustForAdmin.ad?">관리자로비</a></p><br/><br/>
 		<p><a class="btn btn-light" href="AdminMemberList.ad">회원관리</a></p><br/><br/>
 		<p><a class="btn btn-light" href="AdminVisitCheck.ad">출석체크관리</a></p><br/><br/>
-		<p><a class="btn btn-light" href="JustForAdmin.ad?mSw=3">게시판관리</a></p><br/><br/>
+		<p><a class="btn btn-light" href="AdminBoardList.ad">게시판관리</a></p><br/><br/>
 		<p><a class="btn btn-light" href="JustForAdmin.ad?mSw=4">자료실관리</a></p><br/><br/>
 		<p><a class="btn btn-light" href="${ctp}/Lobby">관리종료</a></p><br/><br/>
 	</div>
@@ -146,59 +170,54 @@
 				<button onclick="selectChange(2)" class="badge bg-warning">전체해제</button>
 			</div>
 			<div id="levelSelector">
-				<form name="lcsForm">
-					<select name="ls" id="ls">
-						<option value="1">준회원</option>
-						<option value="2">정회원</option>
-					</select>
-					<button id="mlcb" onclick="memLevelChange()" class="badge bg-secondary">등급변경</button>
-				</form>
+				<select name="levelSelect" id="levelSelect">
+		      <option value="2">정회원</option>
+		      <option value="1">준회원</option>
+		      <option value="3">우수회원</option>
+			  </select>
+			  <button id="mlcb" onclick="memLevelChange()" class="badge bg-danger">등급변경</button>
 			</div>
-			<table class="table table-bordered table-hover">
-				<tr class="table-info">
-					<th class="text-center" id="sels">선택</th>
-					<th>아이디</th>
-					<th>닉네임</th>
-					<th>가입일</th>
-					<th>방문횟수</th>
-					<th>회원등급</th>
-				</tr>
-				<c:forEach var="vo" items="${vos}" varStatus="st">
-					<tr>
-						<td class="text-center" id="sels">
-							<form name="membersForm">
-        				<c:set var="i" value="${st.index}" />
-        				<c:if test="${vo.memLevel == 0}">
-          				<input type="checkbox" name="members" id="members${i}" value="${vo.mid}" disabled />
-        				</c:if>
-        				<c:if test="${vo.memLevel != 0}">
-          				<input type="checkbox" name="members" id="members${i}" value="${vo.mid}" />
-        				</c:if>
-      				</form> 
-						</td>
-						<td>${vo.mid}</td>
-						<td>										
-							<a href="#" onClick="modalOn('${vo.name}','${vo.mid}','${vo.nickName}','${vo.contact}','${vo.email}')" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#memberModal">
-							${vo.nickName}
-							</a>						
-						</td>
-						<td>
-						${fn:substring(vo.joinDate,0,16)}
-						</td>
-						<td>${vo.visitCnt}</td>
-						<c:if test="${vo.memLevel == 1}">
-							<td>준회원</td>
-						</c:if>
-						<c:if test="${vo.memLevel == 2}">
-							<td>정회원</td>
-						</c:if>
-						<c:if test="${vo.memLevel == 0}">
-							<td>운영자/관리자</td>
-						</c:if>
+				<form name="myform">
+				<table class="table table-bordered table-hover">
+					<tr class="table-info">
+						<th class="text-center" id="sels">선택</th>
+						<th>아이디</th>
+						<th>닉네임</th>
+						<th>가입일</th>
+						<th>방문횟수</th>
+						<th>회원등급</th>
 					</tr>
-					<tr><td colspan="5" class="m-0 p-0"></td></tr>
-				</c:forEach>
-			</table>
+					<c:forEach var="vo" items="${vos}" varStatus="st">
+						<c:if test="${vo.memLevel != 0}">
+							<tr>
+								<td class="text-center" id="sels">
+		        				<c:set var="i" value="${st.index}" />
+		        				<c:if test="${vo.memLevel != 0}">
+		          				<input type="checkbox" name="members" id="members${i}" value="${vo.mid}" />
+		        				</c:if>      				
+								</td>
+								<td>${vo.mid}</td>
+								<td>										
+									<a href="#" onClick="modalOn('${vo.name}','${vo.mid}','${vo.nickName}','${vo.contact}','${vo.email}')" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#memberModal">
+									${vo.nickName}
+									</a>						
+								</td>
+								<td>
+								${fn:substring(vo.joinDate,0,16)}
+								</td>
+								<td>${vo.visitCnt}</td>
+								<c:if test="${vo.memLevel == 1}">
+									<td>준회원</td>
+								</c:if>
+								<c:if test="${vo.memLevel == 2}">
+									<td>정회원</td>
+								</c:if>
+							</tr>
+							<tr><td colspan="5" class="m-0 p-0"></td></tr>
+						</c:if>
+					</c:forEach>				
+				</table>
+			</form> 
 		</div>
 	</div>
 <p><br/></p>

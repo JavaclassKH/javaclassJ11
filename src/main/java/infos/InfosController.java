@@ -8,10 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import member.MemberInterface;
-import member.MemberJoinOkCommand;
-import member.MemberMidNickNameCheckCommand;
 @SuppressWarnings("serial")
 @WebServlet("*.inf")
 public class InfosController extends HttpServlet {
@@ -25,6 +21,8 @@ public class InfosController extends HttpServlet {
 		String viewPage = "/WEB-INF/infos";
 	
 		if(com.equals("/IntroduceIVE")) {
+			command = new IntroduceIVE();
+			command.execute(request, response);
 			viewPage += "/introduceIVE.jsp";
 		}
 		else if(com.equals("/MemberInfo")) {

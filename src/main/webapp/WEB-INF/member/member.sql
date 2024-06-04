@@ -61,6 +61,46 @@ insert into visitCheck values (default,'sona123','운영자','실제 출석체�
 select * from visitCheck;
 drop table visitCheck;
 
+-- 메세지 테이블 설계 
+/* 
+	1. 발신 메세지, 수신 메세지 2개로 하기
+  2. 보내면 테이블 두 곳에 다 저장
+  3. 발신 이후엔 두 곳에서 따로 관리
+  4. 두 테이블 모두에서 삭제한 메세지 목록은 관리자에게만 보이고 
+		 주기적으로 관리자가 직접 삭제. 
+	※ 메세지 저장은 메세지 보낼 때 send와 receive 모두에 동시 저장
+*/ 
+create table sendMsg (
+idx int not null auto_increment,            /* 보낸메세지 고유번호 */
+sendMid varchar(30) not null,               /* 발신자 아이디 */
+receiveMid varchar(30) not null,            /* 수신자 아이디 */
+sDate datetime default now(),               /* 메시지 발신 날짜 */
+message text not null,                      /* 메세지 내용 */
+isRead char(2) default 'N',                 /* 메시지 읽음 여부 */
+checked char(8) default 'here',             /* 메시지 상태확인(보유:'here' / 휴지통: 'erase' / 완전삭제: 'delete') */
+primary key(idx),
+foreign key(sendMid) references member(mid),
+foreign key(receiveMid) references member(mid)
+);
+
+create table receiveMsg (
+idx int not null auto_increment,            /* 받은메세지 고유번호 */
+sendMid varchar(30) not null,               /* 발신자 아이디 */
+receiveMid varchar(30) not null,            /* 수신자 아이디 */
+sDate datetime default now(),               /* 메시지 발신 날짜 */
+message text not null,                      /* 메세지 내용 */
+isRead char(2) default 'N',                 /* 메시지 읽음 여부 */
+checked char(8) default 'here',             /* 메시지 상태확인(보유:'here' / 휴지통: 'erase' / 완전삭제: 'delete') */
+primary key(idx),
+foreign key(sendMid) references member(mid),
+foreign key(receiveMid) references member(mid)
+);
+
+desc sendMsg;
+desc receiveMsg;
+
+insert into sendMsg values (default,'admin','sona123',default,'실시간 채팅 테스트1(더미)',default,default);
+insert into receiveMsg values (default,'admin','sona123',default,'실시간 채팅 테스트1(더미)',default,default);
 
 
 

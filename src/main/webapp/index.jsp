@@ -7,7 +7,8 @@
 	<script>
 		let ans = confirm("아이브의 세계로 입장하시겠습니까?");
 		if(ans) {
-			location.href="${ctp}/Lobby";
+			location.href="http://192.168.50.64:9090/javaclassJ11/Lobby"; 
+			/* location.href="${ctp}/Lobby";  */
 		}
 		else {
 			window.close();

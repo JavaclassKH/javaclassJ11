@@ -9,6 +9,15 @@
  .card-img-top {
  	height: 305px;
  }
+ 
+ img {
+ 	border-radius: 15px;
+ 	width: 400px;
+ }
+ 
+ src {
+ 	width: 400px; 
+ }
 	
 </style>
 </head>
@@ -90,7 +99,7 @@
 	      <p class="card-text">
 	      	이름: 김지원 &nbsp;&nbsp; 생년월일: 2004-11-21<br/>
 	      	포지션: 메인보컬 &nbsp;&nbsp; MBTI: INFP &nbsp;&nbsp;<br/>
-	      	MINIVE: 이랑이<br/>
+	      	MINIVE: 치즈<br/>
 	      	대표 별명: 치즈냥이, 깜냥이, 포도냥이<br/><br/><br/>
 	      	<b>- 소개 -</b><br/>
 	      	아이브의 노래 잘하는 냥이 리즈!<br/>

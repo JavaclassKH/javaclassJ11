@@ -90,7 +90,7 @@
                         <div class="col-lg-8 col-xl-6">
                             <div class="text-center">
                                 <h2 class="fw-bolder"><b>Second DIVE를 소개합니다!</b></h2>
-                                <p class="lead fw-normal text-muted mb-5">
+                                <p class="lead fw-normal text-muted mb-6">
                                 	아이브를 사랑하는 팬들이 모여 함께 팬 활동을 이어갈 수 있고,<br/>
                                 	아이브를 모르는 분들이 다이브로 변하도록 만들 수 있으며, <br/>
                                 	전 세계에 아이브가 알려지도록 만들고 싶은<br/>
@@ -102,20 +102,20 @@
                     <div class="row gx-5">
                         <div class="col-lg-4 mb-5">
                             <div class="card h-100 shadow border-0">
-                                <img class="card-img-top" src="https://dummyimage.com/600x350/adb5bd/495057" alt="..." />
+                                <img class="card-img-top" src="${ctp}/images/IVEfun.jpg" style="width:375px; height: 220px;" alt="..." />
                                 <div class="card-body p-4">
-                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">News</div>                                  
-                                    <p class="card-text mb-0">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+	                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">humor</div>                                  
+                                    <p class="card-text mb-0">
+                                    	노래도 완벽! 춤도 완벽! <br/>
+                                    	무엇 하나도 빠지지 않는데...<br/>
+                                    	거기다 예능감까지 <br/>
+                                    	완벽히 갖춘 우리의 짱이브!!! <br/>
+                                    	짱이브에게 푹 빠지면... <br/>
+                                    	절대 헤어나올 수 없어요~~~
+                                    </p>
                                 </div>
                                 <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
                                     <div class="d-flex align-items-end justify-content-between">
-                                        <div class="d-flex align-items-center">
-                                            <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d" alt="..." />
-                                            <div class="small">
-                                                <div class="fw-bold">Kelly Rowan</div>
-                                                <div class="text-muted">March 12, 2023 &middot; 6 min read</div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -124,7 +124,7 @@
                             <div class="card h-100 shadow border-0">
                                 <img class="card-img-top" src="https://dummyimage.com/600x350/adb5bd/495057" alt="..." />
                                 <div class="card-body p-4">
-                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">Media</div>
+                                    <div class="badge bg-primary bg-gradient rounded-pill mb-2">sing</div>
                                     <p class="card-text mb-0">This text is a bit longer to illustrate the adaptive height of each card. Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                 </div>
                                 <div class="card-footer p-4 pt-0 bg-transparent border-top-0">

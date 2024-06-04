@@ -79,6 +79,36 @@ public class MemberController extends HttpServlet {
 			command.execute(request, response);
 			viewPage += "/myPage.jsp";
 		}
+		else if(com.equals("/MessageSend")) {
+			command = new MessageSendCommand();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/MsgSendMidCheck")) {
+			command = new MsgSendMidCheck();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/GoToSendMsgList")) {
+			command = new GoToSendMsgList();
+			command.execute(request, response);
+			viewPage += "/sendMsgList.jsp";
+		}
+		else if(com.equals("/GoToReceiveMsgList")) {
+			command = new ReceiveMsgList();
+			command.execute(request, response);
+			viewPage += "/receiveMsgList.jsp";
+		}
+		else if(com.equals("/IsReadChange")) {
+			command = new IsReadChange();
+			command.execute(request, response);
+			return;
+		}
+		else if(com.equals("/MsgErase")) {
+			command = new ReceiveMsgErase();
+			command.execute(request, response);
+			return;
+		}
 	
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

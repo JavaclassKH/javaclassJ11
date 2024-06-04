@@ -28,6 +28,14 @@ public class MemberDAO {
 		}
 	}
 	
+	public void pstmtForceClose() {
+		if(pstmt == null) {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {}
+		}
+	}
+	
 	public void rsClose() {
 		if(rs != null)
 			try {
@@ -189,8 +197,253 @@ public class MemberDAO {
 		}			
 	}
 
+	// 메시지 보낼때 수신자유무 확인
+	public int getMemberMidList() {
+		int res = 0;
+		
+		try {
+			sql = "select mid form member where mid = ?";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+		} catch (SQLException e) {
+			System.out.println("SQL 오류(메시지 보낼때 수신자유무 확인[MemberDAO]) : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return res;
+	}
+
+	// 메세지를 받을 회원이 존재하는지 검색
+	public String getMemberisHere(String receiverMid) {	
+		String nickName = "";
+		try {
+			sql = "select nickName from member where mid = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, receiverMid);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				nickName = rs.getString("nickName");
+				if(nickName == null || nickName == "") {
+					nickName = "empty";				
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println("SQL 오류(메시지 수신자 유무 검색[MemberDAO]) : " + e.getMessage());
+		} finally {
+			rsClose();
+		}
+		return nickName;
+	}
+	
+	
+
+	// 발신메시지 리스트 확인
+	public ArrayList<MsgVO> getSendMsgList(String mid) {
+		ArrayList<MsgVO> vos = new ArrayList<MsgVO>();
+		
+		try {
+			sql = "select * from sendMsg where sendMid = ? and checked = 'here' order by idx desc";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				MsgVO vo = new MsgVO();
+				
+				vo.setIdx(rs.getInt("idx"));
+				vo.setSendMid(rs.getString("sendMid"));
+				vo.setReceiveMid(rs.getString("receiveMid"));
+				vo.setsDate(rs.getString("sDate"));
+				vo.setMessage(rs.getString("message"));
+				vo.setIsRead(rs.getString("isRead"));
+				vo.setChecked(rs.getString("checked"));
+				
+				vos.add(vo);
+			}			
+		} catch (SQLException e) {
+			System.out.println("SQL 오류(발신메시지 리스트[MemberDAO]) : " + e.getMessage());
+		} finally {
+			rsClose();
+		}		
+		return vos;
+	}
+	
+	
+	// 수신메시지 리스트 확인
+	public ArrayList<MsgVO> getReceiveMsgList(String mid) {
+		ArrayList<MsgVO> vos = new ArrayList<MsgVO>();
+		
+		try {
+			sql = "SELECT *, (SELECT COUNT(*) FROM receiveMsg WHERE isRead = 'N' AND receiveMid = ? AND checked = 'here') AS hereCnt "
+					+ "FROM receiveMsg WHERE receiveMid = ? AND checked = 'here' ORDER BY idx DESC;";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			pstmt.setString(2, mid);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				MsgVO vo = new MsgVO();
+				
+				vo.setIdx(rs.getInt("idx"));
+				vo.setSendMid(rs.getString("sendMid"));
+				vo.setReceiveMid(rs.getString("receiveMid"));
+				vo.setsDate(rs.getString("sDate"));
+				vo.setMessage(rs.getString("message"));
+				vo.setIsRead(rs.getString("isRead"));
+				vo.setChecked(rs.getString("checked"));
+				vo.setHereCnt(rs.getInt("hereCnt"));
+				
+				vos.add(vo);
+			}			
+		} catch (SQLException e) {
+			System.out.println("SQL 오류(수신메시지 리스트[MemberDAO]) : " + e.getMessage());
+		} finally {
+			rsClose();
+		}		
+		return vos;
+	}
+
+	// 메시지 보내기(보낸메시지DB에 저장)
+	public int setIntoSendMsg(String sendMid, String receiveMid, String message) {
+		int res = 0;		
+		try {
+			sql = "insert into sendMsg values (default,?,?,default,?,default,default)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, sendMid);
+			pstmt.setString(2, receiveMid);
+			pstmt.setString(3, message);
+			res = pstmt.executeUpdate();			
+			
+		} catch (SQLException e) {
+			System.out.println("SQL오류(메시지 보내기(보낸메시지DB에 저장)[memberDAO])" + e.getMessage());
+		} finally {
+			pstmtClose();
+		}	
+		return res;
+	}
+	
+	
+	// 메시지 보내기(받은메시지DB에 저장)
+	public int setIntoReceiveMsg(String sendMid, String receiveMid, String message) {
+		int res = 0;		
+		try {
+			sql = "insert into receiveMsg values (default,?,?,default,?,default,default)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, sendMid);
+			pstmt.setString(2, receiveMid);
+			pstmt.setString(3, message);
+			res = pstmt.executeUpdate();			
+			
+		} catch (SQLException e) {
+			System.out.println("SQL오류(메시지 보내기(받은메시지DB에 저장)[memberDAO])" + e.getMessage());
+		} finally {
+			pstmtClose();
+		}
+		return res;
+	}
+
+	// 메시지 조회시 읽음 표시로 변환!(sendMsg)
+	public void setIsReadChange(int idx) {
+		try {
+			sql = "update sendMsg set isRead = 'Y' where idx = ?";
+      pstmt = conn.prepareStatement(sql);
+      pstmt.setInt(1, idx);
+      pstmt.executeUpdate();     
+			
+		} catch (Exception e) {
+			System.out.println("SQL오류(메시지 조회시 읽음 표시로 변환!(send)[memberDAO])" + e.getMessage());
+		} 
+	}
+	
+	// 메시지 조회시 읽음 표시로 변환!(sendMsg)
+	public void setIsReadChange2(int idx) {
+		try {
+			sql = "update receiveMsg set isRead = 'Y' where idx = ?";
+        pstmt = conn.prepareStatement(sql);
+	      pstmt.setInt(1, idx);
+	      pstmt.executeUpdate();
+	      
+		} catch (Exception e) {
+			System.out.println("SQL오류(메시지 조회시 읽음 표시로 변환!(receive)[memberDAO])" + e.getMessage());
+		} finally {
+			pstmtClose();
+		}
+	}
+
+	// 마이페이지 입장시 안읽은 메시지 수만 표시
+	public int getHereMsgCnt(String mid) {
+		int hereCnt = 0;
+		try {
+			sql = "SELECT COUNT(*) AS hereCnt FROM receiveMsg WHERE checked = 'here' AND receiveMid = ? AND isRead = 'N'";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mid);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) hereCnt = rs.getInt("hereCnt");
+			
+		} catch (Exception e) {
+			System.out.println("SQL오류(마이페이지 입장시 안읽은 메시지 수만 표시[memberDAO])" + e.getMessage());
+		} finally {
+			
+		}
+		return hereCnt;
+	}
+
+	// 받은메시지 삭제처리
+	public int setMsgErase(int idx, String part) {
+		int res = 0;	
+		try {
+			if(part.equals("receive")) {
+				sql = "update receiveMsg set checked = 'erase' where idx = ?";				
+			}
+			else {
+				sql = "update sendMsg set checked = 'erase' where idx = ?";								
+			}
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, idx);
+			res = pstmt.executeUpdate();
+		} catch (Exception e) {
+			System.out.println("SQL오류(받은메시지 삭제처리(휴지통으로)[memberDAO])" + e.getMessage());
+		} finally {
+			pstmtClose();
+		}	
+		return res;
+	}
+
+	// 관리자목록 조회
+	public ArrayList<MemberVO> getAdministerList() {
+		ArrayList<MemberVO> vos = new ArrayList<MemberVO>();
+		
+		try {
+			sql = "select mid,nickName from member where memLevel = 0";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				MemberVO vo = new MemberVO();
+				vo.setMid(rs.getString("mid"));
+				vo.setNickName(rs.getString("nickName"));
+				
+				vos.add(vo);
+			}
+		} catch (Exception e) {
+			System.out.println("SQL오류(관리자목록 조회[memberDAO])" + e.getMessage());
+		} 
+		return vos;
+	}
+
+	// 회원레벨 일괄변경
+	public int setMemberLevelChange() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 
+
+	
+	
 
 
 	

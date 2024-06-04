@@ -31,6 +31,8 @@ public class AdminController extends HttpServlet {
 			viewPage = "/include/message.jsp";
 		}
 		else if(com.equals("/JustForAdmin")) {
+			command = new AdministersList();
+			command.execute(request, response);
 			viewPage += "/justForAdminLobby.jsp";
 		}
 		else if(com.equals("/AdminMemberList")) {
@@ -47,6 +49,11 @@ public class AdminController extends HttpServlet {
 			command = new AdminVisitCheck();
 			command.execute(request, response);
 			return;
+		}
+		else if(com.equals("/AdminBoardList")) {
+			command = new AdminBoardList();
+			command.execute(request, response);
+			viewPage += "/adminBoardList.jsp";
 		}
 		
 		

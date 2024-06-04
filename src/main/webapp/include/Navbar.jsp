@@ -3,17 +3,24 @@
 <c:set var="ctp" value="${pageContext.request.contextPath}"/>
   <!-- 최상단 네이게이션 바 -->
 <style>
+	@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
 	#Navbar {
 		background-color: #9aa3e1;
+	}
+	
+	* {
+		font-family: 'Jua';
 	}
 </style>  
             <nav class="navbar navbar-expand-lg" id="Navbar">
                 <div class="container px-5">
-                    <a class="navbar-brand" id="Top">비공식 아이브 팬사이트 - Second DIVE</a>
+                    <a class="navbar-brand" id="Top">
+                    비공식 아이브 팬사이트 - Second DIVE
+                    </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                            <li class="nav-item"><a class="nav-link" href="${ctp}/Lobby">로비</a></li>
+                            <li class="nav-item"><a class="nav-link" href="http://192.168.50.64:9090/javaclassJ11/Lobby">로비</a></li>
                             <li class="nav-item"><a class="nav-link" href="MemberVisitCheck.mem">출석체크</a></li>
                             <li class="nav-item"><a class="nav-link" href="IntroduceIVE.inf">아이브소개</a></li>
                             <c:if test="${empty sMid}">

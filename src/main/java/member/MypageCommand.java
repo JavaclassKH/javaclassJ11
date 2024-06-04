@@ -13,10 +13,13 @@ public class MypageCommand implements MemberInterface {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String mid = (String)session.getAttribute("sMid");
-		
+		int hereCnt = 0;
 		MemberDAO dao = new MemberDAO();		
 		MemberVO vo = dao.getMemberLoginOk(mid);
+		hereCnt = dao.getHereMsgCnt(mid);
 		
 		request.setAttribute("vo", vo);
+		request.setAttribute("hereCnt", hereCnt);
+		
 	}
 }

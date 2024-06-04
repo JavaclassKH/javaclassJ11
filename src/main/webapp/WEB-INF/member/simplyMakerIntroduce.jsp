@@ -36,6 +36,10 @@
 	 margin-left: 10px;
 	}
 	
+	input[type="button"] {
+		margin-right: 30px;
+	}
+	
 </style>
 </head>
 <body class="d-flex flex-column h-100">
@@ -72,8 +76,9 @@
 			</tr>
 		</table>
 		<div style="text-align: right">
-			<input type="button" style="margin-right: 10px;" value="로비" onclick="location.href='${ctp}/Lobby';" class="btn btn-warning btn-lg" />
-			<input type="button" value="이게뭘까요" onclick="whatIsThis()" class="btn btn-danger btn-lg" />
+			<input type="button" value="로비" onclick="location.href='${ctp}/Lobby';" class="btn btn-info btn-lg" />
+			<input type="button" value="로그인" onclick="location.href='MemberLogin.mem';" class="btn btn-primary btn-lg" />
+			<input type="button" value="회원가입" onclick="location.href='MemberJoin.mem';" class="btn btn-success btn-lg" />
 		</div>
 	</div>
 </div>
